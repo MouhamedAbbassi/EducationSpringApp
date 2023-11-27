@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,14 +22,22 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private long idReservation;
+    private Long idReservation;
 
     @Column(name = "anneUniversitaire",nullable = false)
-    private Date anneUniversitaire;
+    private Date anneeUniversaire;
 
     @ManyToOne(cascade = CascadeType.ALL)
     Chambre chambre ;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Etudiant> etudiantSet;
+
+
+    @OneToOne
+    private Etudiant etudiant;
+
+    @ElementCollection(targetClass = choixReservation.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "reservation_choix", joinColumns = @JoinColumn(name = "reservation_id"))
+    @Column(name = "choix_reservation")
+    private List<choixReservation> choixReservation;
 }

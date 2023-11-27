@@ -1,5 +1,6 @@
 package tn.esprit.twin1.EducationSpringApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,6 +34,8 @@ public class Etudiant {
     @Column(name = "dateNaissance",nullable = false)
     private Date dateNaissance;
 
-    @ManyToMany(mappedBy="etudiantSet", cascade = CascadeType.ALL)
-    private Set<Reservation> reservationSet;
+
+    @OneToOne(mappedBy = "etudiant", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Reservation reservation;
 }

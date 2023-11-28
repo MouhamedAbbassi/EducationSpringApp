@@ -1,4 +1,5 @@
 package tn.esprit.twin1.EducationSpringApp.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Set;
@@ -15,7 +16,6 @@ public class Bloc {
     @Id
     @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private long idBloc;
     @Column(name = "nomBloc",nullable = false)
@@ -24,9 +24,11 @@ public class Bloc {
     private long capaciteBloc;
 
     @ManyToOne
+    @JsonIgnore
     Foyer foyer;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="bloc")
+    @JsonIgnore
     private Set<Chambre> chambreSet;;
 
 }

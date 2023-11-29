@@ -1,6 +1,6 @@
 package tn.esprit.twin1.EducationSpringApp.services;
 
-import jakarta.persistence.EntityNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,7 @@ import tn.esprit.twin1.EducationSpringApp.entities.Foyer;
 import tn.esprit.twin1.EducationSpringApp.repositories.BlocRepositorie;
 import tn.esprit.twin1.EducationSpringApp.repositories.FoyerRepositorie;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Slf4j

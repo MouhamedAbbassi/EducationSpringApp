@@ -1,6 +1,6 @@
 package tn.esprit.twin1.EducationSpringApp.repositories;
 
-import jakarta.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +11,7 @@ import tn.esprit.twin1.EducationSpringApp.entities.Etudiant;
 import tn.esprit.twin1.EducationSpringApp.entities.Reservation;
 import tn.esprit.twin1.EducationSpringApp.entities.TypeChambre;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository

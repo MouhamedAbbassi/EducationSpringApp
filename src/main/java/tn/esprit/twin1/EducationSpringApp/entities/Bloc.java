@@ -1,8 +1,10 @@
 package tn.esprit.twin1.EducationSpringApp.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+
 import lombok.*;
 import java.util.Set;
+import javax.persistence.*;
+
 @Entity
 @Getter
 @Setter

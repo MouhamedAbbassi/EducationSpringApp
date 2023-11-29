@@ -11,7 +11,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = "idFoyer")
 @ToString(includeFieldNames = false)
 @Table(name = "Foyer")
 public class Foyer {

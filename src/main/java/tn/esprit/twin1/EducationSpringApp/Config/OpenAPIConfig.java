@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenAPIConfig {
 
+    // url to connect swagger
+    //http://localhost:9090/swagger-ui/index.html
     @Bean
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
@@ -19,8 +21,6 @@ public class OpenAPIConfig {
                 .description("...")
                 .contact(contactAPI());
     }
-
-
     public Contact contactAPI() {
         Contact contact = new Contact().name("4-Twin-1") ;
         return contact;

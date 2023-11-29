@@ -1,7 +1,11 @@
 package tn.esprit.twin1.EducationSpringApp.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import tn.esprit.twin1.EducationSpringApp.entities.AddBlocRequest;
 import tn.esprit.twin1.EducationSpringApp.entities.Bloc;
 import tn.esprit.twin1.EducationSpringApp.entities.Foyer;
 import tn.esprit.twin1.EducationSpringApp.repositories.BlocRepositorie;
@@ -9,6 +13,7 @@ import tn.esprit.twin1.EducationSpringApp.repositories.FoyerRepositorie;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BlocServiceImpl implements BlocService{
@@ -17,9 +22,13 @@ public class BlocServiceImpl implements BlocService{
     private final FoyerRepositorie foyerRepositorie;
 
     @Override
-    public Bloc addBloc(Bloc bloc) {
+    public Bloc addBloc(Bloc bloc  ) {
+        Foyer foyer= bloc.getFoyer();
+        bloc.setFoyer(foyer);
         return blocRepositorie.save(bloc);
     }
+
+
 
     @Override
     public List<Bloc> findAllBloc() {
@@ -31,14 +40,14 @@ public class BlocServiceImpl implements BlocService{
         return blocRepositorie.findById(id).isPresent() ? blocRepositorie.findById(id).get() : null;
     }
 
+
+
     @Override
-    public String deleteBlocById(Long id) {
-        if(blocRepositorie.findById(id).isPresent()){
-            blocRepositorie.deleteById(id);
-            return "Deleted"+blocRepositorie.findById(id).get().toString();
-        }else
-            return "etudiant with ID : "+id+" Doesn't exist";
+    public void deleteBlocById(long id) {
+        blocRepositorie.deleteById(id);
+
     }
+
 
     @Override
     public Bloc updateBloc(long id, Bloc upbloc) {
@@ -52,9 +61,23 @@ public class BlocServiceImpl implements BlocService{
     }
 
     @Override
-    public Bloc addBlocAndAsigneToFoyer(long idFoyer, Bloc bloc) {
-        Foyer foyer = foyerRepositorie.findById(idFoyer).orElse(null);
+    public ResponseEntity<String> addBlocToFoyer(AddBlocRequest request) {
+
+        Foyer foyer = foyerRepositorie.findByNomFoyer(request.getNomFoyer())
+                .orElseThrow(() -> new EntityNotFoundException("Foyer not found"));
+
+        Bloc bloc = new Bloc();
+        bloc.setNomBloc(request.getNomBloc());
+        bloc.setCapaciteBloc(request.getCapaciteBloc());
         bloc.setFoyer(foyer);
-        return blocRepositorie.save(bloc);
+
+        foyer.getBlocSet().add(bloc);
+
+        foyerRepositorie.save(foyer);
+
+        return ResponseEntity.ok("Bloc added to Foyer successfully");
+
     }
+
+
 }

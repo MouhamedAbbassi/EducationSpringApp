@@ -13,6 +13,10 @@ import tn.esprit.twin1.EducationSpringApp.services.FoyerService;
 public class FoyerController {
     private final FoyerService foyerService;
 
+
+
+
+
     @PostMapping("/new")
     public Foyer addFoyer(@RequestBody Foyer foyer) {
         return foyerService.addFoyer(foyer);

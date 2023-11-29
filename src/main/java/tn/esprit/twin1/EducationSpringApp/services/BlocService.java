@@ -14,7 +14,10 @@ public interface BlocService {
 
     Bloc findBlocById(Long id);
 
-    String deleteBlocById(Long id);
+
+
+    void deleteBlocById(long id);
+
     Bloc updateBloc(long id, Bloc upbloc);
 
     // Bloc addBlocAndAsigneToFoyer(long idFoyer, Bloc bloc);

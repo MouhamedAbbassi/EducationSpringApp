@@ -2,25 +2,25 @@ package tn.esprit.twin1.EducationSpringApp.entities;
 
 
 public class AddBlocRequest {
-    private long idFoyer;
+    private String nomFoyer;
     String nomBloc;
     Long capaciteBloc;
 
     public AddBlocRequest() {
     }
 
-    public AddBlocRequest(long idFoyer, String nomBloc, Long capaciteBloc) {
-        this.idFoyer = idFoyer;
+    public AddBlocRequest(String  nomFoyer, String nomBloc, Long capaciteBloc) {
+        this.nomFoyer = nomFoyer;
         this.nomBloc = nomBloc;
         this.capaciteBloc = capaciteBloc;
     }
 
-    public long getIdFoyer() {
-        return idFoyer;
+    public String getNomFoyer() {
+        return nomFoyer;
     }
 
-    public void setIdFoyer(long idFoyer) {
-        this.idFoyer = idFoyer;
+    public void setNomFoyer(String nomFoyer) {
+        this.nomFoyer = nomFoyer;
     }
 
     public String getNomBloc() {

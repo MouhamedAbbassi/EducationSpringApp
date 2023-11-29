@@ -40,14 +40,14 @@ public class BlocServiceImpl implements BlocService{
         return blocRepositorie.findById(id).isPresent() ? blocRepositorie.findById(id).get() : null;
     }
 
+
+
     @Override
-    public String deleteBlocById(Long id) {
-        if(blocRepositorie.findById(id).isPresent()){
-            blocRepositorie.deleteById(id);
-            return "Deleted"+blocRepositorie.findById(id).get().toString();
-        }else
-            return "etudiant with ID : "+id+" Doesn't exist";
+    public void deleteBlocById(long id) {
+        blocRepositorie.deleteById(id);
+
     }
+
 
     @Override
     public Bloc updateBloc(long id, Bloc upbloc) {
@@ -63,7 +63,7 @@ public class BlocServiceImpl implements BlocService{
     @Override
     public ResponseEntity<String> addBlocToFoyer(AddBlocRequest request) {
 
-        Foyer foyer = foyerRepositorie.findById(request.getIdFoyer())
+        Foyer foyer = foyerRepositorie.findByNomFoyer(request.getNomFoyer())
                 .orElseThrow(() -> new EntityNotFoundException("Foyer not found"));
 
         Bloc bloc = new Bloc();
@@ -79,17 +79,5 @@ public class BlocServiceImpl implements BlocService{
 
     }
 
-//    @Override
-//    public Bloc addBlocAndAsigneToFoyer(long idFoyer, Bloc bloc) {
-//        Foyer foyer = foyerRepositorie.findById(idFoyer).orElse(null);
-//        bloc.setFoyer(foyer);
-//        return blocRepositorie.save(bloc);
-//    }
-//
-//    @Override
-//    public Bloc addBlocToFoyer(long idBloc, Foyer foyer) {
-//        Bloc bloc = blocRepositorie.findById(idBloc).orElse(null);
-//        bloc.setFoyer(foyer);
-//        return bloc ;
-//    }
+
 }

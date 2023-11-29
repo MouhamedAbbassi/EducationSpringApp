@@ -3,16 +3,21 @@ package tn.esprit.twin1.EducationSpringApp.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.twin1.EducationSpringApp.entities.AddBlocRequest;
 import tn.esprit.twin1.EducationSpringApp.entities.Bloc;
+import tn.esprit.twin1.EducationSpringApp.entities.BlocDto;
 import tn.esprit.twin1.EducationSpringApp.entities.Foyer;
 import tn.esprit.twin1.EducationSpringApp.repositories.BlocRepositorie;
+import tn.esprit.twin1.EducationSpringApp.repositories.FoyerRepositorie;
 import tn.esprit.twin1.EducationSpringApp.services.BlocService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequestMapping("/bloc")
@@ -22,6 +27,7 @@ import java.util.List;
 
 public class BlocCotroller {
     private final BlocService blocService;
+    private final BlocRepositorie blocRepositorie;
 
 
     @GetMapping("/getAll")
@@ -46,11 +52,12 @@ public class BlocCotroller {
         return blocService.findBlocById(idBloc);
     }
 
+
     @DeleteMapping("/delete/{idBloc}")
     public ResponseEntity<String> deleteFoyer(@PathVariable long idBloc) {
         try {
             Bloc bloc = blocService.findBlocById(idBloc);
-            if ( bloc != null) {
+            if (bloc != null) {
                 blocService.deleteBlocById(idBloc);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
@@ -61,13 +68,48 @@ public class BlocCotroller {
         }
     }
 
-
     @PostMapping("/foyers/addBloc")
     public ResponseEntity<String> addBlocToFoyer(@RequestBody AddBlocRequest request) {
 
-        System.out.println("aaaaaaaaa"+request);
+
        blocService.addBlocToFoyer(request);
         return ResponseEntity.ok("Bloc added to Foyer successfully");
     }
 
-}
+
+
+
+        // ...
+
+        @GetMapping("/blocs")
+        public List<BlocDto> getAllBlocs() {
+            List<Bloc> blocs = blocRepositorie.findAll();
+            List<BlocDto> blocDtos = new ArrayList<>();
+
+            for (Bloc bloc : blocs) {
+                BlocDto blocDto = new BlocDto();
+                blocDto.setIdBloc(bloc.getIdBloc());
+                blocDto.setNomBloc(bloc.getNomBloc());
+                blocDto.setCapaciteBloc(bloc.getCapaciteBloc());
+                blocDto.setNomFoyer(bloc.getFoyer().getNomFoyer()); // Assuming Foyer has a 'name' property
+
+                blocDtos.add(blocDto);
+            }
+
+            return blocDtos;
+        }
+
+
+    @Autowired
+    private FoyerRepositorie foyerRepository;
+
+    @GetMapping("/foyernames")
+    public List<String> getFoyerNames() {
+        List<Foyer> foyers = foyerRepository.findAll();
+        return foyers.stream()
+                .map(Foyer::getNomFoyer)
+                .collect(Collectors.toList());
+    }
+    }
+
+

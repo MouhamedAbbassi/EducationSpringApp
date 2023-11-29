@@ -1,4 +1,5 @@
 package tn.esprit.twin1.EducationSpringApp.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,12 +23,15 @@ public class Chambre {
     private long idChambre;
     @Column(name = "numeroChambre",nullable = false)
     private String numeroChambre;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
+    @Column(name="typeChambre")
     private TypeChambre typeChambre;
 
     @ManyToOne
+    @JsonIgnore
     Bloc bloc ;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy="chambre")
+    @JsonIgnore
     private Set<Reservation> reservationSet;
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import tn.esprit.twin1.EducationSpringApp.entities.Chambre;
 import tn.esprit.twin1.EducationSpringApp.entities.Etudiant;
 import tn.esprit.twin1.EducationSpringApp.entities.Reservation;
@@ -12,6 +13,7 @@ import tn.esprit.twin1.EducationSpringApp.entities.TypeChambre;
 
 import java.util.List;
 
+@Repository
 public interface ReservationRepositorie  extends JpaRepository<Reservation,Long> {
 
     @Query("SELECT COUNT(r) FROM Reservation r JOIN r.chambre c WHERE c.typeChambre = :typeChambre")

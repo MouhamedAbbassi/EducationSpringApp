@@ -24,10 +24,11 @@ public class Reservation {
     @ToString.Exclude
     private Long idReservation;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "anneUniversitaire",nullable = false)
     private Date anneeUniversaire;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     Chambre chambre ;
 
 

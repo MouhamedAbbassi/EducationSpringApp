@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/v1/reservation")
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin("http://localhost:4200")
 public class ReservationController {
 
     @Autowired
@@ -63,9 +64,9 @@ public class ReservationController {
         return reservationService.findReservationById(idReservation);
     }
 
-    @DeleteMapping("delete/{idReservation}")
-    public ResponseEntity<?> Delete(@PathVariable("idReservation") Long idReservation) {
-        reservationService.Delete(idReservation);
+    @DeleteMapping("/delete/{idReservation}")
+    public ResponseEntity<?> Delete(@PathVariable("idReservation") Long id) {
+        reservationService.Delete(id);
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/not-reserved")

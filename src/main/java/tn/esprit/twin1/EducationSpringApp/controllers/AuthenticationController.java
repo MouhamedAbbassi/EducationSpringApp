@@ -12,6 +12,7 @@ import tn.esprit.twin1.EducationSpringApp.services.AuthenticationService;
 
 
 
+@RestController
 @RequestMapping("/api/auth")
 @CrossOrigin("*")
 

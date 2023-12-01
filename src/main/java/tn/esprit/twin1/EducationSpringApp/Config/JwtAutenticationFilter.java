@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 import tn.esprit.twin1.EducationSpringApp.services.JWTService;
 import tn.esprit.twin1.EducationSpringApp.services.UserService;
@@ -23,6 +24,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
+
 
 public class JwtAutenticationFilter extends OncePerRequestFilter {
     private final JWTService jwtService;

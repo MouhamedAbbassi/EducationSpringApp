@@ -11,9 +11,9 @@ import tn.esprit.twin1.EducationSpringApp.entities.User;
 import tn.esprit.twin1.EducationSpringApp.services.AuthenticationService;
 
 
-@RestController
-@CrossOrigin(origins = "http://localhost:4200")
+
 @RequestMapping("/api/auth")
+@CrossOrigin("*")
 
 
 public class AuthenticationController {

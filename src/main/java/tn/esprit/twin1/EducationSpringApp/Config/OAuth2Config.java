@@ -1,4 +1,4 @@
-package com.codewithattia.MiniProject.config;
+package tn.esprit.twin1.EducationSpringApp.Config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,13 +27,11 @@ public class OAuth2Config {
                 .clientId(clientId)
                 .clientSecret(clientSecret)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                // .redirectUri("http://localhost:4200/login/oauth2/code/{registrationId}")
-                .redirectUri("http://localhost:4200/back")
+                .redirectUri("http://localhost:4200/login/oauth2/code/{registrationId}")
                 .authorizationUri("https://accounts.google.com/o/oauth2/auth")
                 .tokenUri("https://oauth2.googleapis.com/token")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
                 .scope("email", "profile")
-                // Other configurations...
                 .build();
 
         return new InMemoryClientRegistrationRepository(clientRegistration);

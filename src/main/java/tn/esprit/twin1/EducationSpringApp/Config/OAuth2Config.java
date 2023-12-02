@@ -1,4 +1,4 @@
-package com.codewithattia.MiniProject.config;
+package tn.esprit.twin1.EducationSpringApp.Config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

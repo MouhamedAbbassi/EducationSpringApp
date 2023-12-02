@@ -10,7 +10,7 @@
 //public class OpenAPIConfig {
 //
 //    // url to connect swagger
-//    //http://localhost:9090/swagger-ui/index.html
+//    //http://localhost:8080/swagger-ui/index.html
 //    @Bean
 //    public OpenAPI springShopOpenAPI() {
 //        return new OpenAPI()

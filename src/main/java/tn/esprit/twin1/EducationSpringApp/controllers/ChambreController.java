@@ -4,15 +4,42 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.twin1.EducationSpringApp.entities.Bloc;
+import tn.esprit.twin1.EducationSpringApp.entities.BlocDto;
 import tn.esprit.twin1.EducationSpringApp.entities.Chambre;
+import tn.esprit.twin1.EducationSpringApp.entities.ChambreDto;
+import tn.esprit.twin1.EducationSpringApp.repositories.ChambreRepositorie;
 import tn.esprit.twin1.EducationSpringApp.services.ChambreService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("/chambre")
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class ChambreController {
 
     private final ChambreService chambreService;
+    private final ChambreRepositorie chambreRepositorie;
+    @GetMapping("/chambres")
+     public List<ChambreDto> getAllBlocs() {
+        List<Chambre> chambres = chambreRepositorie.findAll();
+        List<ChambreDto> chambreDtos = new ArrayList<>();
+
+        for (Chambre chambre : chambres) {
+            ChambreDto chambreDto = new ChambreDto();
+            chambreDto.setIdChambre(chambre.getIdChambre());
+            chambreDto.setNumChambre(chambre.getNumeroChambre());
+            chambreDto.setTypeChambre(chambre.getTypeChambre());
+            chambreDto.setNomBloc(chambre.getBloc().getNomBloc()); // Assuming Foyer has a 'name' property
+
+
+            chambreDtos.add(chambreDto);
+        }
+
+        return chambreDtos;
+    }
 
     @PostMapping("/new")
     public Chambre addFoyer(@RequestBody Chambre chambre) {

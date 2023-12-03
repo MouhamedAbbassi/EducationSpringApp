@@ -1,5 +1,8 @@
 package tn.esprit.twin1.EducationSpringApp.services;
 
+import org.springframework.http.ResponseEntity;
+import tn.esprit.twin1.EducationSpringApp.entities.AddBlocRequest;
+import tn.esprit.twin1.EducationSpringApp.entities.AddChambreRequest;
 import tn.esprit.twin1.EducationSpringApp.entities.Chambre;
 
 import java.util.List;
@@ -13,4 +16,6 @@ public interface ChambreService {
 
     String deleteChambreById(Long id);
     Chambre updateChambre(long id, Chambre upchambre);
+    ResponseEntity<String> addChambreToBloc(AddChambreRequest request);
+
 }

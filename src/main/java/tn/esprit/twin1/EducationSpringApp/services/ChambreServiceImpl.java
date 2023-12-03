@@ -1,17 +1,25 @@
 package tn.esprit.twin1.EducationSpringApp.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import tn.esprit.twin1.EducationSpringApp.entities.AddChambreRequest;
+import tn.esprit.twin1.EducationSpringApp.entities.Bloc;
 import tn.esprit.twin1.EducationSpringApp.entities.Chambre;
+import tn.esprit.twin1.EducationSpringApp.entities.Foyer;
+import tn.esprit.twin1.EducationSpringApp.repositories.BlocRepositorie;
 import tn.esprit.twin1.EducationSpringApp.repositories.ChambreRepositorie;
+import javax.persistence.EntityNotFoundException;
 
-import java.util.List;
-
+ import java.util.List;
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ChambreServiceImpl implements ChambreService {
 
     private final ChambreRepositorie chambreRepositorie;
+    private final BlocRepositorie blocRepositorie;
 
     @Override
     public Chambre addChambre(Chambre chambre) {
@@ -46,5 +54,20 @@ public class ChambreServiceImpl implements ChambreService {
 
 
         return  chambreRepositorie.save(chambre);
+    }
+
+    @Override
+    public ResponseEntity<String> addChambreToBloc(AddChambreRequest request) {
+
+        Bloc bloc = blocRepositorie.findByNomBloc(request.getNomBloc());
+
+        Chambre chambre = new Chambre();
+        chambre.setNumeroChambre(request.getNumChambre());
+        chambre.setTypeChambre(request.getTypeChambre());
+
+        bloc.getChambreSet().add(chambre);
+        blocRepositorie.save(bloc);
+
+        return ResponseEntity.ok("Bloc added to Foyer successfully");
     }
 }

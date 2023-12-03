@@ -1,5 +1,4 @@
-package  tn.esprit.twin1.EducationSpringApp.Config;
-
+package tn.esprit.twin1.EducationSpringApp.Config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,38 +13,20 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import tn.esprit.twin1.EducationSpringApp.entities.Role;
 import tn.esprit.twin1.EducationSpringApp.services.UserService;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-
 public class SecurityConfiguration {
     private final JwtAutenticationFilter jwtAutenticationFilter;
     private final UserService userService;
-
     private final ClientRegistrationRepository clientRegistrationRepository;
-    //    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(request->request.requestMatchers("/api/auth/**")
-//                        .permitAll()
-//                        .requestMatchers("/api/admin").hasAnyAuthority(Role.ADMIN.name())
-//                        .requestMatchers("/api/user").hasAnyAuthority(Role.USER.name())
-//                        .anyRequest().authenticated())
-//                .sessionManagement(manager->manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAutenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//        return http.build();
-//
-//
-//
-//    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf(AbstractHttpConfigurer::disable)
@@ -65,27 +46,21 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-
-
     @Bean
-
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider=new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userService.userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
-    @Bean
 
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception
-    {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-
-
     }
-
 }

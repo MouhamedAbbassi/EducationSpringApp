@@ -20,9 +20,13 @@ import tn.esprit.twin1.EducationSpringApp.services.OtpService;
 
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 83accc4c58b2748f9f9a4add66fd7bfd3efbebe0
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/auth")
+@CrossOrigin("*")
 
 
 public class AuthenticationController {

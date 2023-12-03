@@ -6,11 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.twin1.EducationSpringApp.entities.*;
+import tn.esprit.twin1.EducationSpringApp.repositories.BlocRepositorie;
 import tn.esprit.twin1.EducationSpringApp.repositories.ChambreRepositorie;
 import tn.esprit.twin1.EducationSpringApp.services.ChambreService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @RequestMapping("/chambre")
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class ChambreController {
 
     private final ChambreService chambreService;
     private final ChambreRepositorie chambreRepositorie;
+    private final BlocRepositorie blocRepositorie;
     @GetMapping("/chambres")
      public List<ChambreDto> getAllBlocs() {
         List<Chambre> chambres = chambreRepositorie.findAll();
@@ -30,7 +34,7 @@ public class ChambreController {
             chambreDto.setIdChambre(chambre.getIdChambre());
             chambreDto.setNumChambre(chambre.getNumeroChambre());
             chambreDto.setTypeChambre(chambre.getTypeChambre());
-            chambreDto.setNomBloc(chambre.getBloc().getNomBloc()); // Assuming Foyer has a 'name' property
+            chambreDto.setNomBloc(chambre.getBloc().getNomBloc());
 
             chambreDtos.add(chambreDto);
         }
@@ -72,5 +76,14 @@ public class ChambreController {
             // Handle other exceptions with a 500 Internal Server Error
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @GetMapping("/blocnames")
+    public List<String> getBlocNames() {
+        List<Bloc> blocs = blocRepositorie.findAll();
+        return blocs.stream()
+                .map(Bloc::getNomBloc)
+                .collect(Collectors.toList());
     }
 }

@@ -37,12 +37,8 @@ public class ChambreServiceImpl implements ChambreService {
     }
 
     @Override
-    public String deleteChambreById(Long id) {
-        if(chambreRepositorie.findById(id).isPresent()){
-            chambreRepositorie.deleteById(id);
-            return "Deleted"+chambreRepositorie.findById(id).get().toString();
-        }else
-            return "etudiant with ID : "+id+" Doesn't exist";
+    public void deleteChambreById(Long id) {
+chambreRepositorie.deleteById(id);
     }
 
     @Override
@@ -62,12 +58,14 @@ public class ChambreServiceImpl implements ChambreService {
         Bloc bloc = blocRepositorie.findByNomBloc(request.getNomBloc());
 
         Chambre chambre = new Chambre();
+
         chambre.setNumeroChambre(request.getNumChambre());
         chambre.setTypeChambre(request.getTypeChambre());
+        chambre.setBloc(bloc);
 
         bloc.getChambreSet().add(chambre);
         blocRepositorie.save(bloc);
 
-        return ResponseEntity.ok("Bloc added to Foyer successfully");
+        return ResponseEntity.ok("Chambre added to Bloc successfully");
     }
 }

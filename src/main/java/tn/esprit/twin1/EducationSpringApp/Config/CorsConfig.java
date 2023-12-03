@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //package tn.esprit.twin1.EducationSpringApp.Config;
 //
 //import org.springframework.context.annotation.Bean;
@@ -20,3 +21,5 @@
 //                .maxAge(3600);
 //    }
 //}
+=======
+>>>>>>> 83accc4c58b2748f9f9a4add66fd7bfd3efbebe0

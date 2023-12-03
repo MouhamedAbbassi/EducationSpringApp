@@ -11,7 +11,10 @@ import tn.esprit.twin1.EducationSpringApp.entities.User;
 import tn.esprit.twin1.EducationSpringApp.services.AuthenticationService;
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 83accc4c58b2748f9f9a4add66fd7bfd3efbebe0
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin("*")

@@ -15,6 +15,7 @@ import tn.esprit.twin1.EducationSpringApp.repositories.BlocRepositorie;
 import tn.esprit.twin1.EducationSpringApp.repositories.FoyerRepositorie;
 import tn.esprit.twin1.EducationSpringApp.services.BlocService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,6 +92,7 @@ public class BlocCotroller {
                 blocDto.setIdBloc(bloc.getIdBloc());
                 blocDto.setNomBloc(bloc.getNomBloc());
                 blocDto.setCapaciteBloc(bloc.getCapaciteBloc());
+
                 blocDto.setNomFoyer(bloc.getFoyer().getNomFoyer()); // Assuming Foyer has a 'name' property
 
                 blocDtos.add(blocDto);
@@ -110,6 +112,21 @@ public class BlocCotroller {
                 .map(Foyer::getNomFoyer)
                 .collect(Collectors.toList());
     }
+
+
+
+    public Bloc updateBloc(long id, AddBlocRequest upbloc) {
+        Bloc bloc = blocRepositorie.findById(id).orElse(null);
+        Foyer foyer = foyerRepository.findByNomFoyer(upbloc.getNomFoyer())
+                .orElseThrow(() -> new EntityNotFoundException("Foyer not found"));
+
+        bloc.setNomBloc(upbloc.getNomBloc());
+        bloc.setCapaciteBloc(upbloc.getCapaciteBloc());
+        bloc.setFoyer(foyer);
+
+
+        return  blocRepositorie.save(bloc);
     }
+}
 
 

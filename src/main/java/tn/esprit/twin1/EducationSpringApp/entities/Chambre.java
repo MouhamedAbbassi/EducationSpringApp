@@ -12,16 +12,12 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode
-@ToString
 @Table(name = "Chambre")
 public class Chambre {
     @Id
     @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private long idChambre;
+     private long idChambre;
     @Column(name = "numeroChambre",nullable = false)
     private String numeroChambre;
     @Enumerated(EnumType.STRING)

@@ -68,6 +68,7 @@ public class BlocServiceImpl implements BlocService{
                 .orElseThrow(() -> new EntityNotFoundException("Foyer not found"));
 
         Bloc bloc = new Bloc();
+
         bloc.setNomBloc(request.getNomBloc());
         bloc.setCapaciteBloc(request.getCapaciteBloc());
         bloc.setFoyer(foyer);

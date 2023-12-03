@@ -18,7 +18,7 @@ public interface BlocService {
 
     void deleteBlocById(long id);
 
-    Bloc updateBloc(long id, Bloc upbloc);
+    Bloc updateBloc(long id, AddBlocRequest upbloc);
 
     // Bloc addBlocAndAsigneToFoyer(long idFoyer, Bloc bloc);
     ResponseEntity<String> addBlocToFoyer(AddBlocRequest request);

@@ -15,7 +15,7 @@ public interface ChambreService {
     Chambre findChambreById(Long id);
 
     void deleteChambreById(Long id);
-    Chambre updateChambre(long id, Chambre upchambre);
+    Chambre updateChambre(long id, AddChambreRequest upchambre);
     ResponseEntity<String> addChambreToBloc(AddChambreRequest request);
 
 }

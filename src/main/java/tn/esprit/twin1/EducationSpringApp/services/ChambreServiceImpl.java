@@ -42,12 +42,13 @@ chambreRepositorie.deleteById(id);
     }
 
     @Override
-    public Chambre updateChambre(long id, Chambre upchambre) {
+    public Chambre updateChambre(long id, AddChambreRequest upchambre) {
         Chambre chambre = chambreRepositorie.findById(id).orElse(null);
+        Bloc bloc = blocRepositorie.findByNomBloc(upchambre.getNomBloc());
 
-        chambre.setNumeroChambre(upchambre.getNumeroChambre());
+        chambre.setNumeroChambre(upchambre.getNumChambre());
         chambre.setTypeChambre(upchambre.getTypeChambre());
-
+          chambre.setBloc(bloc);
 
         return  chambreRepositorie.save(chambre);
     }

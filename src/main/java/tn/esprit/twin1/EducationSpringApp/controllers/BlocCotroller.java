@@ -92,6 +92,7 @@ public class BlocCotroller {
                 blocDto.setIdBloc(bloc.getIdBloc());
                 blocDto.setNomBloc(bloc.getNomBloc());
                 blocDto.setCapaciteBloc(bloc.getCapaciteBloc());
+
                 blocDto.setNomFoyer(bloc.getFoyer().getNomFoyer()); // Assuming Foyer has a 'name' property
 
                 blocDtos.add(blocDto);

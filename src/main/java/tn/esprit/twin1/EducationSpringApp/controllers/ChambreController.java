@@ -1,22 +1,52 @@
 package tn.esprit.twin1.EducationSpringApp.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.twin1.EducationSpringApp.entities.Chambre;
+import tn.esprit.twin1.EducationSpringApp.entities.*;
+import tn.esprit.twin1.EducationSpringApp.repositories.ChambreRepositorie;
 import tn.esprit.twin1.EducationSpringApp.services.ChambreService;
 
+import java.util.ArrayList;
+import java.util.List;
+@Slf4j
 @RequestMapping("/chambre")
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class ChambreController {
 
     private final ChambreService chambreService;
+    private final ChambreRepositorie chambreRepositorie;
+    @GetMapping("/chambres")
+     public List<ChambreDto> getAllBlocs() {
+        List<Chambre> chambres = chambreRepositorie.findAll();
+        List<ChambreDto> chambreDtos = new ArrayList<>();
+
+        for (Chambre chambre : chambres) {
+            ChambreDto chambreDto = new ChambreDto();
+            chambreDto.setIdChambre(chambre.getIdChambre());
+            chambreDto.setNumChambre(chambre.getNumeroChambre());
+            chambreDto.setTypeChambre(chambre.getTypeChambre());
+            chambreDto.setNomBloc(chambre.getBloc().getNomBloc()); // Assuming Foyer has a 'name' property
+
+            chambreDtos.add(chambreDto);
+        }
+
+        return chambreDtos;
+    }
 
     @PostMapping("/new")
     public Chambre addFoyer(@RequestBody Chambre chambre) {
         return chambreService.addChambre(chambre);
+    }
+    @PostMapping("/blocs/addChambre")
+    public ResponseEntity<String> addChambreToBloc(@RequestBody AddChambreRequest request) {
+       System.out.println("requeeeeeeeeeeeeeeeest"+request.getNumChambre());
+        chambreService.addChambreToBloc(request);
+        return ResponseEntity.ok("Chambre added to Bloc successfully");
     }
 
     @PutMapping("/update/{idChambre}")

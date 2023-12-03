@@ -19,23 +19,8 @@ import java.util.List;
 @RestController
 @CrossOrigin("http://localhost:4200")
 public class ReservationController {
-
     @Autowired
-    private final ChambreServiceImpl chambreServiceImpl;
-
-    @Autowired
-    private final ReservationServiceImpl reservationService;
-
-    @GetMapping
-    public ResponseEntity<List<Reservation>> getAllReservations() {
-        try {
-            List<Reservation> reservations = reservationService.findAllReservations();
-            return new ResponseEntity<>(reservations, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
+    private ReservationService reservationService;
 
     @PostMapping
     public ResponseEntity<?> addReservation(@RequestBody Reservation reservation) {
@@ -48,17 +33,16 @@ public class ReservationController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @PutMapping("/update/{idReservation}")
-    public ResponseEntity<?> updateChambreInfo(@PathVariable Long idReservation, @RequestBody Chambre chambreUpdateRequest) {
+    @GetMapping
+    public ResponseEntity<List<Reservation>> getAllReservations() {
         try {
-            reservationService.updateReservation(idReservation, chambreUpdateRequest.getNumeroChambre(), chambreUpdateRequest.getTypeChambre());
-            return new ResponseEntity<>("Chambre information updated successfully", HttpStatus.OK);
+            List<Reservation> reservations = reservationService.findAllReservations();
+            return new ResponseEntity<>(reservations, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
 
+    }
     @GetMapping("/getBy/{idReservation}")
     public Reservation getId(@PathVariable long idReservation) {
         return reservationService.findReservationById(idReservation);
@@ -73,21 +57,15 @@ public class ReservationController {
     public List<Chambre> getNotReservedRooms() {
         return reservationService.getNotReservedRooms();
     }
-    @GetMapping("/students-without-reservation")
-    public ResponseEntity<List<Etudiant>> getEtudiantsWithoutReservation() {
-        List<Etudiant> etudiantsWithoutReservation = reservationService.findEtudiantsWithoutReservation();
-        return new ResponseEntity<>(etudiantsWithoutReservation, HttpStatus.OK);
-    }
-    @GetMapping("getEtudiant/{id}")
-    public ResponseEntity<Etudiant> getEtudiantByIdReservation(@PathVariable Long id) {
+    @PutMapping("/update/{idReservation}")
+    public ResponseEntity<?> updateChambreInfo(@PathVariable Long idReservation, @RequestBody Chambre chambreUpdateRequest) {
         try {
-            Etudiant etudiant = reservationService.getEtudiantByIdReservation(id);
-            return new ResponseEntity<>(etudiant, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            reservationService.updateReservation(idReservation, chambreUpdateRequest.getNumeroChambre(), chambreUpdateRequest.getTypeChambre());
+            return new ResponseEntity<>("Chambre information updated successfully", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }
 

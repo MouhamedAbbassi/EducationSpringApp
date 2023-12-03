@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import tn.esprit.twin1.EducationSpringApp.entities.Role;
@@ -14,6 +15,7 @@ import tn.esprit.twin1.EducationSpringApp.repositories.UserRepository;
 @EnableScheduling
 @EnableAspectJAutoProxy
 @SpringBootApplication
+@EnableAsync
 public class TpSpringApplication implements CommandLineRunner {
 	@Autowired
 	private UserRepository userRepository;

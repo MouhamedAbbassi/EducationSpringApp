@@ -2,6 +2,8 @@ package tn.esprit.twin1.EducationSpringApp.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
+
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -11,14 +13,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode
-@ToString
 @Table(name = "Bloc")
 public class Bloc {
     @Id
     @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.IDENTITY )
-    @ToString.Exclude
     private long idBloc;
     @Column(name = "nomBloc",nullable = false)
     private String nomBloc;
@@ -31,6 +30,6 @@ public class Bloc {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="bloc")
     @JsonIgnore
-    private Set<Chambre> chambreSet;;
+    private Set<Chambre> chambreSet  = new HashSet<>();
 
 }

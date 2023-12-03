@@ -9,7 +9,7 @@ public class ChambreDto {
 
 
     private  long idChambre ;
-        private String numChambre;
+    private String numChambre;
     private String nomBloc;
     private TypeChambre typeChambre;
     public ChambreDto() {}

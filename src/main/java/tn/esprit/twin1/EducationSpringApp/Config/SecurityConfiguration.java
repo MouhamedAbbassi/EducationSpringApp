@@ -32,6 +32,8 @@ public class SecurityConfiguration {
         http.cors().and().csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(authorize -> authorize
                         .antMatchers("/api/auth/**").permitAll()
+                        .antMatchers("/chambre/chambres/**").permitAll()
+                        .antMatchers("/chambre/blocs/addChambre/**").permitAll()
                         .antMatchers("/api/admin/**").hasAuthority(Role.ADMIN.name())
                         .antMatchers("/api/user/**").hasAuthority(Role.USER.name())
                         .anyRequest().authenticated()

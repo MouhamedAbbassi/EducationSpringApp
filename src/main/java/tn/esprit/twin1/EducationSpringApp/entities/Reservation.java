@@ -33,13 +33,9 @@ public class Reservation {
     Chambre chambre ;
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @OneToOne
-    private Etudiant etudiant;
 
-    @ElementCollection(targetClass = choixReservation.class)
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "reservation_choix", joinColumns = @JoinColumn(name = "reservation_id"))
-    @Column(name = "choix_reservation")
-    private List<choixReservation> choixReservation;
 }

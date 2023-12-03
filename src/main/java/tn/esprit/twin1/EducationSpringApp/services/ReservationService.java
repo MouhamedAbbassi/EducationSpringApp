@@ -12,14 +12,11 @@ public interface ReservationService {
 
     List<Reservation> findAllReservations();
 
-    Reservation findReservationById(Long id);
+    Reservation findReservationById(long idReservation);
 
-    void Delete(Long idReservation);
-    Reservation updateReservation(Long idReservation, String numeroChambre, TypeChambre typeChambre);
+    void Delete(Long id);
 
     List<Chambre> getNotReservedRooms();
 
-    List<Etudiant> findEtudiantsWithoutReservation();
-
-    Etudiant getEtudiantByIdReservation(Long idReservation);
+    Reservation updateReservation(Long idReservation, String numeroChambre, TypeChambre typeChambre);
 }

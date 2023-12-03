@@ -36,7 +36,5 @@ public class Etudiant {
     private Date dateNaissance;
 
 
-    @OneToOne(mappedBy = "etudiant", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Reservation reservation;
+
 }

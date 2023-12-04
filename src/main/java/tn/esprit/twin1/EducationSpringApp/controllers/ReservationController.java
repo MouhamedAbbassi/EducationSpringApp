@@ -5,13 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.twin1.EducationSpringApp.dto.ReservationDto;
+import tn.esprit.twin1.EducationSpringApp.dto.UserReservationRequest;
 import tn.esprit.twin1.EducationSpringApp.entities.Chambre;
 import tn.esprit.twin1.EducationSpringApp.entities.Etudiant;
 import tn.esprit.twin1.EducationSpringApp.entities.Reservation;
+import tn.esprit.twin1.EducationSpringApp.entities.User;
 import tn.esprit.twin1.EducationSpringApp.services.ChambreServiceImpl;
 import tn.esprit.twin1.EducationSpringApp.services.ReservationService;
 import tn.esprit.twin1.EducationSpringApp.services.ReservationServiceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/api/v1/reservation")
@@ -23,10 +27,10 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping
-    public ResponseEntity<?> addReservation(@RequestBody Reservation reservation) {
+    public ResponseEntity<?> addReservation(@RequestBody ReservationDto reservationDTO) {
         try {
-            Reservation addedReservation = reservationService.addReservation(reservation);
-            return new ResponseEntity<>(addedReservation, HttpStatus.CREATED);
+            reservationService.addReservation(reservationDTO);
+            return new ResponseEntity<>(reservationDTO, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
@@ -34,9 +38,9 @@ public class ReservationController {
         }
     }
     @GetMapping
-    public ResponseEntity<List<Reservation>> getAllReservations() {
+    public ResponseEntity<List<ReservationDto>> getAllReservations() {
         try {
-            List<Reservation> reservations = reservationService.findAllReservations();
+            List<ReservationDto> reservations = reservationService.findAllReservations();
             return new ResponseEntity<>(reservations, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -44,7 +48,7 @@ public class ReservationController {
 
     }
     @GetMapping("/getBy/{idReservation}")
-    public Reservation getId(@PathVariable long idReservation) {
+    public ReservationDto getId(@PathVariable long idReservation) {
         return reservationService.findReservationById(idReservation);
     }
 
@@ -58,13 +62,35 @@ public class ReservationController {
         return reservationService.getNotReservedRooms();
     }
     @PutMapping("/update/{idReservation}")
-    public ResponseEntity<?> updateChambreInfo(@PathVariable Long idReservation, @RequestBody Chambre chambreUpdateRequest) {
+    public ResponseEntity<?> updateChambreInfo(@PathVariable Long idReservation, @RequestBody ReservationDto reservationDto) {
         try {
-            reservationService.updateReservation(idReservation, chambreUpdateRequest.getNumeroChambre(), chambreUpdateRequest.getTypeChambre());
+            reservationService.updateReservation(idReservation, reservationDto);
             return new ResponseEntity<>("Chambre information updated successfully", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("/students-without-reservation")
+    public ResponseEntity<List<UserReservationRequest>> getEtudiantsWithoutReservation() {
+        List<User> usersWithoutReservation = reservationService.findUsersWithoutReservation();
+        List<UserReservationRequest> userReservationRequests = mapUsersToUserReservationRequests(usersWithoutReservation);
+        return new ResponseEntity<>(userReservationRequests, HttpStatus.OK);
+    }
+
+    private List<UserReservationRequest> mapUsersToUserReservationRequests(List<User> usersWithoutReservation) {
+        List<UserReservationRequest> userReservationRequests = new ArrayList<>();
+
+        for (User user : usersWithoutReservation) {
+            UserReservationRequest userReservationRequest = new UserReservationRequest();
+            userReservationRequest.setId(user.getId()); // Assuming User has an 'id' field
+            userReservationRequest.setEmail(user.getEmail()); // Assuming User has an 'email' field
+            userReservationRequest.setUsername(user.getFirstName()); // Assuming User has a 'username' field
+
+
+            userReservationRequests.add(userReservationRequest);
+        }
+
+        return userReservationRequests;
     }
 
 }

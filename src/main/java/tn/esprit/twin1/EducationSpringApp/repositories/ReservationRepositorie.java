@@ -6,10 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import tn.esprit.twin1.EducationSpringApp.entities.Chambre;
-import tn.esprit.twin1.EducationSpringApp.entities.Etudiant;
-import tn.esprit.twin1.EducationSpringApp.entities.Reservation;
-import tn.esprit.twin1.EducationSpringApp.entities.TypeChambre;
+import tn.esprit.twin1.EducationSpringApp.dto.UserReservationRequest;
+import tn.esprit.twin1.EducationSpringApp.entities.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -24,4 +22,8 @@ public interface ReservationRepositorie  extends JpaRepository<Reservation,Long>
             "OR (c.typeChambre = 'Triple' AND (SELECT COUNT(r) FROM Reservation r WHERE r.chambre.idChambre = c.idChambre) < 3))")
 
     List<Chambre> findNotReservedRooms();
+
+    @Query("SELECT e FROM User e WHERE e.role = 0 AND NOT EXISTS (SELECT 1 FROM Reservation r WHERE r.user = e)")
+    List<User> findUsersWithoutReservation();
+
 }

@@ -54,7 +54,7 @@ public class ChambreController {
     }
 
     @PutMapping("/update/{idChambre}")
-    public Chambre updateChambre(@PathVariable long idChambre,@RequestBody Chambre chambre) {
+    public Chambre updateChambre(@PathVariable long idChambre,@RequestBody AddChambreRequest chambre) {
         return chambreService.updateChambre(idChambre,chambre);
     }
 

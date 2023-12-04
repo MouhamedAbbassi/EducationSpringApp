@@ -51,12 +51,14 @@ public class BlocServiceImpl implements BlocService{
 
 
     @Override
-    public Bloc updateBloc(long id, Bloc upbloc) {
+    public Bloc updateBloc(long id, AddBlocRequest upbloc) {
         Bloc bloc = blocRepositorie.findById(id).orElse(null);
+
+        Foyer foyer = foyerRepositorie.findByNomFoyer(upbloc.getNomFoyer()).orElse(null);
 
         bloc.setNomBloc(upbloc.getNomBloc());
         bloc.setCapaciteBloc(upbloc.getCapaciteBloc());
-
+        bloc.setFoyer(foyer);
 
         return  blocRepositorie.save(bloc);
     }

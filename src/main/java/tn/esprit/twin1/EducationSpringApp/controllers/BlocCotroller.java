@@ -44,7 +44,7 @@ public class BlocCotroller {
     }
 
     @PutMapping("/update/{idBloc}")
-    public Bloc updateFoyer(@PathVariable long idBloc,@RequestBody Bloc bloc) {
+    public Bloc updateFoyer(@PathVariable long idBloc,@RequestBody AddBlocRequest bloc) {
         return blocService.updateBloc(idBloc,bloc);
     }
 
@@ -115,18 +115,7 @@ public class BlocCotroller {
 
 
 
-    public Bloc updateBloc(long id, AddBlocRequest upbloc) {
-        Bloc bloc = blocRepositorie.findById(id).orElse(null);
-        Foyer foyer = foyerRepository.findByNomFoyer(upbloc.getNomFoyer())
-                .orElseThrow(() -> new EntityNotFoundException("Foyer not found"));
 
-        bloc.setNomBloc(upbloc.getNomBloc());
-        bloc.setCapaciteBloc(upbloc.getCapaciteBloc());
-        bloc.setFoyer(foyer);
-
-
-        return  blocRepositorie.save(bloc);
-    }
 }
 
 

@@ -32,8 +32,12 @@ public class SecurityConfiguration {
         http.cors().and().csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(authorize -> authorize
                         .antMatchers("/api/auth/**").permitAll()
+<<<<<<< HEAD
                         .antMatchers("/chambre/update/{idChambre}/**").permitAll()
                         .antMatchers("/api/admin/**").hasAuthority(Role.ADMIN.name())
+=======
+                        .antMatchers("/api/admin/**","/api/v1/reservation").hasAuthority(Role.ADMIN.name())
+>>>>>>> ad3c7b6c990cece08081b3b4b86f616b3de0f16a
                         .antMatchers("/api/user/**").hasAuthority(Role.USER.name())
                         .anyRequest().authenticated()
                 )

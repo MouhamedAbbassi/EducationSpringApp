@@ -1,25 +1,23 @@
 package tn.esprit.twin1.EducationSpringApp.services;
 
-import tn.esprit.twin1.EducationSpringApp.entities.Chambre;
-import tn.esprit.twin1.EducationSpringApp.entities.Etudiant;
-import tn.esprit.twin1.EducationSpringApp.entities.Reservation;
-import tn.esprit.twin1.EducationSpringApp.entities.TypeChambre;
+import tn.esprit.twin1.EducationSpringApp.dto.ReservationDto;
+import tn.esprit.twin1.EducationSpringApp.dto.UserReservationRequest;
+import tn.esprit.twin1.EducationSpringApp.entities.*;
 
 import java.util.List;
 
 public interface ReservationService {
-    Reservation addReservation(Reservation reservation);
+    void addReservation(ReservationDto reservationDTO);
 
-    List<Reservation> findAllReservations();
+    List<ReservationDto> findAllReservations();
 
-    Reservation findReservationById(Long id);
+    ReservationDto findReservationById(long idReservation);
 
-    void Delete(Long idReservation);
-    Reservation updateReservation(Long idReservation, String numeroChambre, TypeChambre typeChambre);
+    void Delete(Long id);
 
     List<Chambre> getNotReservedRooms();
 
-    List<Etudiant> findEtudiantsWithoutReservation();
+    Reservation updateReservation(Long idReservation, ReservationDto reservationDto);
 
-    Etudiant getEtudiantByIdReservation(Long idReservation);
+    List<User> findUsersWithoutReservation();
 }

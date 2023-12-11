@@ -27,7 +27,7 @@ public class OAuth2Config {
                 .clientId(clientId)
                 .clientSecret(clientSecret)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("http://localhost:4200/login/oauth2/code/{registrationId}")
+                .redirectUri("http://localhost:4200/front")
                 .authorizationUri("https://accounts.google.com/o/oauth2/auth")
                 .tokenUri("https://oauth2.googleapis.com/token")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)

@@ -11,8 +11,11 @@ public interface FoyerService {
 
     Foyer findFoyerById(Long id);
 
-    String deleteFoyerById(Long id);
+    void deleteFoyerById(Long id);
     Foyer updateFoyer(long id, Foyer upfoyer);
 
     Foyer addFoyerAndAsigneToUni(long idUni, Foyer foyer);
+    List<String> getFoyersNonAffectes();
+    boolean isNomFoyerUnique(String nomFoyer);
+    Foyer getFoyerByNom(String nomFoyer);
 }

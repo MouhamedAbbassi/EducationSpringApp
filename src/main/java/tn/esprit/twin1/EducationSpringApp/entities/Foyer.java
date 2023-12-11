@@ -24,7 +24,7 @@ public class Foyer {
     @Column(name = "capaciteFoyer",nullable = false)
     private long capaciteFoyer;
 
-    @OneToOne
+    @OneToOne(mappedBy = "foyer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Universite universite;
 
 

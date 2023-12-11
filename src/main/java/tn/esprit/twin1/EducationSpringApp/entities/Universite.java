@@ -28,9 +28,10 @@ public class Universite {
 
     @Column(name = "adresse",nullable = false)
     private String adresse;
-
+    @Column(name = "logo")
+    private String logo;
     @JsonIgnore
-    @OneToOne(mappedBy = "universite", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Foyer foyer;
 
 

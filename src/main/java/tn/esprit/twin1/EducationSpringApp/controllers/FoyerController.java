@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.twin1.EducationSpringApp.entities.Foyer;
 import tn.esprit.twin1.EducationSpringApp.services.FoyerService;
 
+import java.util.List;
+
 @RequestMapping("/foyer")
 @RequiredArgsConstructor
 @RestController
@@ -15,7 +17,11 @@ public class FoyerController {
 
 
 
-
+    @GetMapping("/checkUniqueName")
+    public ResponseEntity<Boolean> checkUniqueName(@RequestParam String nomFoyer) {
+        boolean isUnique = foyerService.isNomFoyerUnique(nomFoyer);
+        return ResponseEntity.ok(isUnique);
+    }
 
     @PostMapping("/new")
     public Foyer addFoyer(@RequestBody Foyer foyer) {
@@ -33,18 +39,15 @@ public class FoyerController {
     }
 
     @DeleteMapping("/delete/{idFoyer}")
-    public ResponseEntity<String> deleteFoyer(@PathVariable long idFoyer) {
-        try {
-            Foyer foyer = foyerService.findFoyerById(idFoyer);
-            if ( foyer != null) {
-                foyerService.deleteFoyerById(idFoyer);
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            // Handle other exceptions with a 500 Internal Server Error
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public void deleteFoyer(@PathVariable long idFoyer) {
+     foyerService.deleteFoyerById(idFoyer);
     }
-
+    @GetMapping("/getAll")
+public List<Foyer> getAllFoyers(){
+        return foyerService.findAllFoyer();
+    }
+    @GetMapping("/getFoyer")
+    public Foyer getByNom(@RequestParam String nomFoyer) {
+        return foyerService.getFoyerByNom(nomFoyer);
+    }
 }
